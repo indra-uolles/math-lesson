@@ -1,26 +1,30 @@
 var steps,
-    inputs = {};
+    inputs = {},
+    currStep = 0,
+    currInputs;
 
 $(function() {
     $.getJSON('steps.json', function(data) {
-        var rendered = '';
+        var rendered = '',
+            currToSolve = {};
 
-        for (var i in steps = data.map(function(obj) { return obj.step })) {
-            rendered += renderStep(i) + (i < steps.length - 1 ? renderSign({ content : "=" }) : '');  
-        }
+        steps = data.map(function(obj) { return obj.step })
 
-        $(rendered).appendTo(".steps-container");
+        $(renderStep(0)).appendTo(".steps-container");
+        currStep++;
     });
 
     $.getJSON('inputs.json', function(data) { 
         data.map(function(obj) { inputs[obj.id] = obj });
-    });
+        currInputs = getCurrentInputs(0);
+    });   
 
     $(".steps-container").on( "blur", ".formula-input", function(e) {
         var id = $(this).attr("id"),
-            val = $(this).val();
+            val = $(this).val(),
+            wrong = (inputs[id].value != val);
         
-        if (val != '' && inputs[id].value != val) {
+        if (val != '' && wrong) {
             addHint($(this));
 
             var input = $('#' + id);
@@ -28,6 +32,9 @@ $(function() {
             input.val(val);
             input.addClass("wrong");
         }
+
+        id in currInputs && (currInputs[id] = wrong ? false : true);
+        checkStep();
     });
 
     $(".steps-container").on( "focus", ".formula-input", function(e) {
@@ -38,6 +45,36 @@ $(function() {
         removeHint($(this));
     });
 });
+
+function checkStep() {
+    var solved = true;
+    for (i in currInputs) { if (currInputs[i] === false) { solved = false } };
+    if (solved) {
+        var nextStep = renderStep(currStep);
+
+        if (nextStep.length) { 
+            nextStep = renderSign({ content : "=" }) + nextStep;
+            $(nextStep).appendTo(".steps-container"); 
+            currInputs = getCurrentInputs(currStep);   
+            currStep++;
+        } else {
+            $(".steps-container").html('');
+            $(renderStep(0)).appendTo(".steps-container");
+            currStep = 0;
+            currInputs = getCurrentInputs(0);    
+        }
+    }
+}
+
+function getCurrentInputs(k) {
+    var result = {};
+
+    for (i in inputs) {
+        if (inputs[i].step === k) { result[inputs[i].id] = false };
+    }
+
+    return result;
+}
 
 function addHint(input) {
     var old = input.closest('input'),
@@ -64,6 +101,8 @@ function getHint(input) {
 }
 
 function renderStep(j) {
+
+    if (j >= steps.length) { return '' };
 
     return '<div class="step step_small">' +
         steps[j].reduce(function(prev, curr) { return prev += renderFormulaUnit(curr) }, '') +
