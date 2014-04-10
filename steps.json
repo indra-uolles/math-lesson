@@ -1,0 +1,141 @@
+[
+    {
+        "step": [
+            {
+                "type": "frac",
+                "content": {
+                    "num": 1,
+                    "denum": 3
+                }
+            },
+            {
+                "type": "sign",
+                "content": "+"
+            },
+            {
+                "type": "frac",
+                "content": {
+                    "num": 2,
+                    "denum": 7
+                }
+            },
+            {
+                "type": "sign",
+                "content": "="
+            },
+            {
+                "type": "frac",
+                "content": {
+                    "num": [
+                        "1&nbsp;&sdot;&nbsp;",
+                        {
+                            "type": "input",
+                            "content": {
+                                "id": "i1"
+                            }
+                        }
+                    ],
+                    "denum": [
+                        "3&nbsp;&sdot;&nbsp;",
+                        {
+                            "type": "input",
+                            "content": {
+                                "id": "i2"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "sign",
+                "content": "+"
+            },
+            {
+                "type": "frac",
+                "content": {
+                    "num": [
+                        "2&nbsp;&sdot;&nbsp;",
+                        {
+                            "type": "input",
+                            "content": {
+                                "id": "i3"
+                            }
+                        }
+                    ],
+                    "denum": [
+                        "7&nbsp;&sdot;&nbsp;",
+                        {
+                            "type": "input",
+                            "content": {
+                                "id": "i4"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "step": [
+            {
+                "type": "frac",
+                "content": {
+                    "num": {
+                        "type": "input",
+                        "content": {
+                            "id": "i5"
+                        }
+                    },
+                    "denum": {
+                        "type": "input",
+                        "content": {
+                            "id": "i6"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "sign",
+                "content": "+"
+            },
+            {
+                "type": "frac",
+                "content": {
+                    "num": {
+                        "type": "input",
+                        "content": {
+                            "id": "i7"
+                        }
+                    },
+                    "denum": {
+                        "type": "input",
+                        "content": {
+                            "id": "i8"
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "step": [
+            {
+                "type": "frac",
+                "content": {
+                    "num": {
+                        "type": "input",
+                        "content": {
+                            "id": "i9"
+                        }
+                    },
+                    "denum": {
+                        "type": "input",
+                        "content": {
+                            "id": "i10"
+                        }
+                    }
+                }
+            }
+        ]
+    }
+]
