@@ -114,6 +114,13 @@ html, body
     box-shadow: 0 0 7px rgba(81, 203, 238, 1);
 }
 
+.formula-input.wrong
+{
+    border: 1px solid #CC0000;
+    box-shadow: 0 0 7px #CC0000;  
+    color: #CC0000; 
+}
+
 .hint
 {
     position: absolute;

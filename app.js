@@ -12,15 +12,32 @@ $(function() {
         $(rendered).appendTo(".steps-container");
     });
 
-    var def = $.Deferred();
-
     $.getJSON('inputs.json', function(data) { 
         data.map(function(obj) { inputs[obj.id] = obj });
     });
 
-    //addHint($('#i1'));
-    //addHint($('#i10'));
-}); 
+    $(".steps-container").on( "blur", ".formula-input", function(e) {
+        var id = $(this).attr("id"),
+            val = $(this).val();
+        
+        if (val != '' && inputs[id].value != val) {
+            addHint($(this));
+
+            var input = $('#' + id);
+
+            input.val(val);
+            input.addClass("wrong");
+        }
+    });
+
+    $(".steps-container").on( "focus", ".formula-input", function(e) {
+        $(this)
+            .hasClass('wrong') && $(this).removeClass('wrong')
+            .val('');
+
+        removeHint($(this));
+    });
+});
 
 function addHint(input) {
     var old = input.closest('input'),
@@ -33,11 +50,20 @@ function addHint(input) {
         '</div>' + '</div>');
 }
 
+function removeHint(input) {
+    var old = input.closest('.input-container'),
+        id = input.attr("id"),
+        val = input.val();
+
+    old.replaceWith(renderSymbol({ "type": "input", "content": { "id": id } })); 
+    $('#' + id).val(val);
+}
+
 function getHint(input) {
     return inputs[input.attr("id")].hint;
 }
 
-function renderStep(j){
+function renderStep(j) {
 
     return '<div class="step step_small">' +
         steps[j].reduce(function(prev, curr) { return prev += renderFormulaUnit(curr) }, '') +
