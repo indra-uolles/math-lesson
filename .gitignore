@@ -27,3 +27,4 @@ node_modules
 
 .DS_Store
 .jshintrc
+*.min.js

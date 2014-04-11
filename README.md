@@ -14,7 +14,6 @@ math-lesson
 ### Запущенная версия тут:
 [http://sky2high.net/smirnova/](http://sky2high.net/smirnova/)
 
-
 ### Запуск сайта на локальной машине:
 
 1. `git clone https://github.com/indra-uolles/math-lesson.git`
@@ -22,3 +21,6 @@ math-lesson
 3. `npm install`
 4. `npm start`
 5. Открыть в браузере [http://localhost:9000](http://localhost:9000)
+
+###Работоспособность
+страница проверялась в браузерах: Chrome, IE11, IE10([http://netrenderer.com/](http://netrenderer.com/)) Opera 15, FF 28

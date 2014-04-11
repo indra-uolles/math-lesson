@@ -113,6 +113,7 @@ var task = (function () {
          * @return {String} подсказка
          */
         getHint: function(id) {
+            
             return _solution.inputs[id].hint;    
         }
     };
@@ -155,6 +156,10 @@ var task = (function () {
     /**
      * @private
      * Формирует html-представление части шаблона шага решения, соответствующей дроби
+     *
+     *isPlain = true, если числитель и/или знаменатель дроби не являются массивами,
+     *включающими в себя поля ввода (это нужно для стилизации отступов)
+     * 
      * @param  {Object} frac внутреннее представление дроби
      * @return {String} html-представление
      */

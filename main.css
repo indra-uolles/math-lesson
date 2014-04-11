@@ -88,7 +88,7 @@ html, body
     margin: 6px 0;
     max-width: 46px;
     outline: none;
-    border: 1px solid #DDD;
+    border: 1px solid #ddd;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -116,9 +116,9 @@ html, body
 
 .formula-input.wrong
 {
-    border: 1px solid #CC0000;
-    box-shadow: 0 0 7px #CC0000;  
-    color: #CC0000; 
+    border: 1px solid #c00;
+    box-shadow: 0 0 7px #c00;  
+    color: #c00; 
 }
 
 .hint

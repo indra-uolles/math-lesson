@@ -1,6 +1,7 @@
 {
   "dependencies" : {
-    "http-server"   :  "*"
+    "http-server"   :  "*",
+    "jquery"   :  "2.1.0"
   },
   "scripts": {
     "start": "./node_modules/http-server/bin/http-server ./ -p 9000"
