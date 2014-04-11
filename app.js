@@ -4,66 +4,76 @@ var steps,
     currInputs;
 
 $(function() {
+
     $.getJSON('steps.json', function(data) {
-        var rendered = '',
-            currToSolve = {};
-
-        steps = data.map(function(obj) { return obj.step })
-
-        $(renderStep(0)).appendTo(".steps-container");
-        currStep++;
+        steps = data.map(function(obj) { return obj.step });
     });
 
-    $.getJSON('inputs.json', function(data) { 
+    $.getJSON('inputs.json', function(data) {
         data.map(function(obj) { inputs[obj.id] = obj });
-        currInputs = getCurrentInputs(0);
-    });   
+        init();
+        addStep(getStep(0));
+    });
 
-    $(".steps-container").on( "blur", ".formula-input", function(e) {
-        var id = $(this).attr("id"),
+    $('.steps-container').on('blur', '.formula-input', function(e) {
+        var input = $(this),
+            id = $(this).attr('id'),
             val = $(this).val(),
             wrong = (inputs[id].value != val);
         
-        if (val != '' && wrong) {
-            addHint($(this));
+        if (val !== '' && wrong) {
+            addHint(input);
 
-            var input = $('#' + id);
+            input = $('#' + id);
 
             input.val(val);
-            input.addClass("wrong");
+            input.addClass('wrong');
         }
 
-        id in currInputs && (currInputs[id] = wrong ? false : true);
+        !wrong && (input.prop('disabled', true));
+        currInputs[id] = wrong ? false : true;
+
         checkStep();
     });
 
-    $(".steps-container").on( "focus", ".formula-input", function(e) {
-        $(this)
-            .hasClass('wrong') && $(this).removeClass('wrong')
-            .val('');
+    $('.steps-container').on('focus', '.formula-input', function(e) {
+        $(this).hasClass('wrong') && $(this).removeClass('wrong').val('');
 
         removeHint($(this));
     });
 });
 
+function init() {
+    $('.steps-container').html('');
+    currStep = 0;   
+}
+
 function checkStep() {
     var solved = true;
-    for (i in currInputs) { if (currInputs[i] === false) { solved = false } };
+    for (var i in currInputs) { if (currInputs[i] === false) { solved = false } };
+
     if (solved) {
-        var nextStep = renderStep(currStep);
+        var nextStep = getStep(currStep);
 
         if (nextStep.length) { 
-            nextStep = renderSign({ content : "=" }) + nextStep;
-            $(nextStep).appendTo(".steps-container"); 
-            currInputs = getCurrentInputs(currStep);   
-            currStep++;
+            addStep(nextStep);
         } else {
-            $(".steps-container").html('');
-            $(renderStep(0)).appendTo(".steps-container");
-            currStep = 0;
-            currInputs = getCurrentInputs(0);    
+            init(); 
+            addStep(getStep(0));   
         }
     }
+}
+
+function addStep(step) {
+    $(step).appendTo('.steps-container'); 
+    currInputs = getCurrentInputs(currStep);   
+    currStep++;    
+}
+
+function getStep(j) {
+    var nextStep = renderStep(j);
+
+    return nextStep.length ? (j > 0 ? renderSign({ content : '=' }) : '') + nextStep : '';
 }
 
 function getCurrentInputs(k) {
@@ -77,32 +87,29 @@ function getCurrentInputs(k) {
 }
 
 function addHint(input) {
-    var old = input.closest('input'),
-        hint = getHint(input);
+    var hint = getHint(input);
 
-    hint && old.replaceWith(
+    hint && input.closest('input').replaceWith(
         '<div class="input-container hinted">' + 
-        renderSymbol({ "type": "input", "content": { "id": input.attr('id') } }) + 
-        '<div class="hint">' + getHint(input) +
-        '</div>' + '</div>');
+        renderSymbol({ type: 'input', content: { 'id': input.attr('id') } }) + 
+        '<div class="hint">' + hint + '</div></div>');
 }
 
 function removeHint(input) {
-    var old = input.closest('.input-container'),
-        id = input.attr("id"),
+    var id = input.attr('id'),
         val = input.val();
 
-    old.replaceWith(renderSymbol({ "type": "input", "content": { "id": id } })); 
+    input.closest('.input-container').replaceWith(
+        renderSymbol({ type: 'input', content: { 'id': id } })); 
     $('#' + id).val(val);
 }
 
 function getHint(input) {
-    return inputs[input.attr("id")].hint;
+    return inputs[input.attr('id')].hint;
 }
 
 function renderStep(j) {
-
-    if (j >= steps.length) { return '' };
+    if (!steps || j >= steps.length) { return '' };
 
     return '<div class="step step_small">' +
         steps[j].reduce(function(prev, curr) { return prev += renderFormulaUnit(curr) }, '') +
@@ -110,31 +117,30 @@ function renderStep(j) {
 }
 
 function renderFormulaUnit(unit) {
-    var type = unit.type,
-        cases = {
-            "frac": renderFrac,
-            "sign": renderSign
+    var cases = {
+            'frac': renderFrac,
+            'sign': renderSign
         };
 
-    return cases[type](unit) || '';
+    return cases[unit.type](unit) || '';
 }
 
 function renderFrac(frac) {
     var num = frac.content.num,
         denum = frac.content.denum,
-        isPlain = !(typeof(num) === "object" || typeof(denum) === "object");
+        isPlain = !(typeof(num) === 'object' || typeof(denum) === 'object');
 
     return '<div class="fraction formula-unit' + (isPlain? ' plain' : '') + '">' +
-                renderFracPart(num, "num") + renderFracPart(denum, "denum") +
+                renderFracPart(num, 'num') + renderFracPart(denum, 'denum') +
             '</div>';
 }
 
-function renderFracPart(el, type) {   
+function renderFracPart(el, type) {  
 
     var result = '<div class="' + type + '">';
 
-    typeof(el) === "object" ?
-        result += el.length ? 
+    typeof(el) === 'object' ?
+        result += el.length ?
             el.reduce(function(prev, curr) { return prev += renderSymbol(curr) }, '') :
             renderSymbol(el) :
         result += el;
@@ -144,7 +150,7 @@ function renderFracPart(el, type) {
 
 function renderSymbol(symbol) {
 
-    return (typeof(symbol) === "object" && symbol.type == "input") ? 
+    return (typeof(symbol) === 'object' && symbol.type == 'input') ? 
         '<input id="' + symbol.content.id + '" type="text" class="formula-input">' :
         symbol;
 }
