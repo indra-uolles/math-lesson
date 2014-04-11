@@ -10,7 +10,7 @@ $(function() {
         data.map(function(obj) { inputs[obj.id] = obj });
         task.init(steps, inputs);
         $('.steps-container').html('');
-        addStep(task.getStep());
+        _addStep(task.getStep());
     });
 
     $('.steps-container').on('blur', '.formula-input', function(e) {
@@ -20,7 +20,7 @@ $(function() {
             correct = task.checkValue(val, id);
         
         if (val !== '' && !correct) {
-            addHint(input);
+            _addHint(input);
 
             input = $('#' + id);
             input.val(val);
@@ -29,16 +29,22 @@ $(function() {
 
         correct && (input.prop('disabled', true));
         task.updateProgress(val, id);
-        afterCheck(task.getProgress());
+        _afterCheck(task.getProgress());
     });
 
     $('.steps-container').on('focus', '.formula-input', function(e) {
         $(this).hasClass('wrong') && $(this).removeClass('wrong').val('');
-        removeHint($(this));
+        _removeHint($(this));
     });
 });
 
-function afterCheck(progress) {
+/**
+ * @private
+ * Если шаг выполнен правильно, то добавляет в поле решения следующий шаблон ввода шага
+ * решения, а также обновляет структуру данных для учета прогресса по шагу
+ * @param  {Boolean} progress правильность шага
+ */
+function _afterCheck(progress) {
     if (progress) {
         task.next();
 
@@ -50,13 +56,21 @@ function afterCheck(progress) {
             nextStep = task.getStep(); 
         }
 
-        addStep(nextStep);   
+        _addStep(nextStep);   
     }
 }
 
-function addStep(step) { $(step).appendTo('.steps-container') }
+/**
+ * Добавляет шаблон шага решения в поле решения
+ * @param {String} step html-представление шаблона шага
+ */
+function _addStep(step) { $(step).appendTo('.steps-container') }
 
-function addHint(input) {
+/**
+ * Добавляет подсказку к полю ввода
+ * @param {jQuery} input поле ввода
+ */
+function _addHint(input) {
     var id = input.attr('id'),
         hint = task.getHint(id);
 
@@ -66,7 +80,11 @@ function addHint(input) {
         '<div class="hint">' + hint + '</div></div>');
 }
 
-function removeHint(input) {
+/**
+ * Удаляет подсказку, всплывшую над некоторым полем ввода
+ * @param  {jQuery} input поле ввода
+ */
+function _removeHint(input) {
     var id = input.attr('id'),
         val = input.val();
 
