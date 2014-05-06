@@ -16,11 +16,13 @@ math-lesson
 
 ### Запуск сайта на локальной машине:
 
-1. `git clone https://github.com/indra-uolles/math-lesson.git`
-2. `cd math-lesson`
-3. `npm install`
-4. `npm start`
-5. Открыть в браузере [http://localhost:9000](http://localhost:9000)
+1. Если нет npm, [устанавливаем] (http://habrahabr.ru/post/133363/)
+2. Если нет gulp, устанавливаем: `npm install -g gulp`
+3. `git clone https://github.com/indra-uolles/math-lesson.git`
+4. `cd math-lesson`
+5. `npm install`
+6. `npm start`
+7. Открыть в браузере [http://localhost:9000](http://localhost:9000)
 
 ###Работоспособность
 страница проверялась в браузерах: Chrome, IE11, IE10([http://netrenderer.com/](http://netrenderer.com/)) Opera 15, FF 28

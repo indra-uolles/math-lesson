@@ -1,8 +1,14 @@
 {
-  "dependencies" : {
-    "http-server"   :  "*"
+  "dependencies": {
+    "gulp-minify-css": "^0.3.4",
+    "http-server": "*"
   },
   "scripts": {
     "start": "./node_modules/http-server/bin/http-server ./ -p 9000"
+  },
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-changed": "^0.3.0",
+    "gulp-jshint": "^1.5.5"
   }
 }

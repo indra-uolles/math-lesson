@@ -2,11 +2,11 @@ $(function() {
     var steps,
         inputs = {};
 
-    $.getJSON('steps.json', function(data) {
+    $.getJSON('./json/steps.json', function(data) {
         steps = data.map(function(obj) { return obj.step });
     });
 
-    $.getJSON('inputs.json', function(data) {
+    $.getJSON('./json/inputs.json', function(data) {
         data.map(function(obj) { inputs[obj.id] = obj });
         task.init(steps, inputs);
         $('.steps-container').html('');
