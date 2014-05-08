@@ -21,6 +21,7 @@ math-lesson
 3. `git clone https://github.com/indra-uolles/math-lesson.git`
 4. `cd math-lesson`
 5. `npm install`
+6. `gulp` (нажать ctrl+c, т.к. он заработает в режиме live reload)
 6. `npm start`
 7. Открыть в браузере [http://localhost:9000](http://localhost:9000)
 

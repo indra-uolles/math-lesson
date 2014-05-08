@@ -9,6 +9,8 @@
   "devDependencies": {
     "gulp": "^3.6.2",
     "gulp-changed": "^0.3.0",
-    "gulp-jshint": "^1.5.5"
+    "gulp-autoprefixer": "*",
+    "gulp-concat": "*",
+    "gulp-uglify": "*"
   }
 }
