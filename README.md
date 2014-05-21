@@ -18,8 +18,10 @@ math-lesson
 
 1. Если нет npm, [устанавливаем] (http://habrahabr.ru/post/133363/)
 2. Если нет gulp, устанавливаем: `npm install -g gulp`
-3. `git clone https://github.com/indra-uolles/math-lesson.git`
-4. `cd math-lesson`
+3. Если вы на ветке coffee, и нет coffeescript, устанавливаем его:
+   `npm install -g coffee`
+4. `git clone https://github.com/indra-uolles/math-lesson.git`
+5. `cd math-lesson`
 5. `npm install`
 6. `gulp` (нажать ctrl+c, т.к. он заработает в режиме live reload)
 6. `npm start`
