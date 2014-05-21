@@ -4,13 +4,15 @@
     "http-server": "*"
   },
   "scripts": {
-    "start": "./node_modules/http-server/bin/http-server ./ -p 9000"
+    "start": "node_modules/http-server/bin/http-server ./ -p 9000"
   },
   "devDependencies": {
     "gulp": "^3.6.2",
     "gulp-changed": "^0.3.0",
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
-    "gulp-uglify": "*"
+    "gulp-uglify": "*",
+    "gulp-coffee": "*",
+    "gulp-util": "*"
   }
 }
