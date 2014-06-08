@@ -7,12 +7,12 @@
     "start": "node_modules/http-server/bin/http-server ./ -p 9000"
   },
   "devDependencies": {
-    "gulp": "^3.6.2",
-    "gulp-changed": "^0.3.0",
+    "coffee-script": "1.7.1",
+    "gulp": "3.7.0",
     "gulp-autoprefixer": "*",
-    "gulp-concat": "*",
-    "gulp-uglify": "*",
-    "gulp-coffee": "*",
-    "gulp-util": "*"
+    "gulp-concat": "2.2.0",
+    "gulp-uglify": "0.3.0",
+    "gulp-coffee": "1.4.3",
+    "gulp-util": "2.2.16"
   }
 }
